@@ -40,6 +40,4 @@ def get_player_data():
     data_file = open("./static/data.json", mode="r")
     data = json.load(data_file)
 
-    print(data)
-
     return data
