@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request, Response
 from dotenv import load_dotenv
 import os
 import json
@@ -16,14 +16,14 @@ def index_page():
 @app.post("/api/update")
 def update_player_data():
     if request.method != "POST":
-        return
+        return Response(status=405)
     
     auth_header = request.headers.get("Authorization")
     if auth_header == None:
-        return
+        return Response(status=401)
     
     if auth_header != AUTHORIZATION_TOKEN:
-        return
+        return Response(status=401)
     
     new_player_data = request.form["player_data"]
 
@@ -31,7 +31,7 @@ def update_player_data():
     data_file.write(new_player_data)
     data_file.close()
 
-    return {"message": "hello"}
+    return Response(status=200)
     
 @app.get("/api/data")
 def get_player_data():
