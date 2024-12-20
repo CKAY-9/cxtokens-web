@@ -15,6 +15,8 @@ def index_page():
 
 @app.post("/api/update")
 def update_player_data():
+    # Overwrite existing data
+
     if request.method != "POST":
         return Response(status=405)
     
@@ -39,5 +41,6 @@ def get_player_data():
 
     data_file = open("./static/data.json", mode="r")
     data = json.load(data_file)
+    data_file.close()
 
     return data
