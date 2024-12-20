@@ -3,6 +3,14 @@ const player_data_element = document.getElementById("player_data");
 window.onload = async () => {
     const request = await fetch("/api/data");
     const player_array = await request.json();
+
+    if (player_array.length <= 0) {
+        player_data_element.innerHTML = `
+            <h2>No player entries.</h2>
+        `;
+        
+        return;
+    }
     
     // player_array format: Player[], Player: {bounty: number, tokens: number, username: string, uuid: string}
     for (let i = 0; i < player_array.length; i++) {
